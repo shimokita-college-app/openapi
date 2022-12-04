@@ -534,22 +534,23 @@ components:
                 type: array
                 uniqueItems: true
                 items:
-                  $ref: '#/components/schemas/GenerationOption'
+                  $ref: '#/components/schemas/GenerationInner'
               houses:
                 type: array
                 uniqueItems: true
                 items:
-                  $ref: '#/components/schemas/GenerationOption'
+                  $ref: '#/components/schemas/GenerationInner'
               committees:
                 type: array
                 uniqueItems: true
                 items:
-                  $ref: '#/components/schemas/GroupOption'
+                  $ref: '#/components/schemas/GroupInner'
               clubs:
                 type: array
                 uniqueItems: true
                 items:
-                  $ref: '#/components/schemas/GroupOption'
+                  $ref: '#/components/schemas/GroupInner'
+      description: ''
   responses:
     LoginResponse:
       description: ''
