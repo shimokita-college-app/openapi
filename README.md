@@ -1,4 +1,4 @@
-# openapi
+# Shimokita College API - OpenAPI
 
 ## Mock Server
 
