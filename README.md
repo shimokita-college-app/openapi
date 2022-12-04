@@ -1,4 +1,4 @@
-# openapi
+# SC App API - OpenAPI
 
 ## Mock Server
 
