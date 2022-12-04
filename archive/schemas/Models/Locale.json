@@ -1,0 +1,11 @@
+{
+  "title": "Locale",
+  "x-stoplight": {
+    "id": "19al0a94fmy5y"
+  },
+  "type": "string",
+  "enum": [
+    "en_US"
+  ],
+  "readOnly": true
+}

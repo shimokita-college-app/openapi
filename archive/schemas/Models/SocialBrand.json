@@ -1,0 +1,13 @@
+{
+  "title": "SocialBrand",
+  "x-stoplight": {
+    "id": "fnazw59q88zgm"
+  },
+  "type": "string",
+  "enum": [
+    "twitter",
+    "instagram",
+    "paypay"
+  ],
+  "readOnly": true
+}

@@ -1,0 +1,13 @@
+{
+  "title": "Role",
+  "x-stoplight": {
+    "id": "thqf3j0gvut9d"
+  },
+  "type": "string",
+  "enum": [
+    "resident",
+    "alumni",
+    "staff"
+  ],
+  "readOnly": true
+}

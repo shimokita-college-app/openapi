@@ -1,0 +1,19 @@
+{
+  "title": "UserSocialProfile",
+  "x-stoplight": {
+    "id": "cr5xzu1a0dhn2"
+  },
+  "type": "object",
+  "properties": {
+    "brand": {
+      "$ref": "./SocialBrand.json"
+    },
+    "username": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "brand",
+    "username"
+  ]
+}

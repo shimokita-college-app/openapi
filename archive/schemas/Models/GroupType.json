@@ -1,0 +1,12 @@
+{
+  "title": "GroupType",
+  "x-stoplight": {
+    "id": "wzlm8z6x2ws7t"
+  },
+  "type": "string",
+  "enum": [
+    "committee",
+    "club"
+  ],
+  "readOnly": true
+}

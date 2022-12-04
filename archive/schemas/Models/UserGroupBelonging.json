@@ -1,0 +1,22 @@
+{
+  "title": "UserGroupBelonging",
+  "x-stoplight": {
+    "id": "oev4gcwdr2ebu"
+  },
+  "type": "object",
+  "properties": {
+    "group": {
+      "$ref": "./Group.json"
+    },
+    "from": {
+      "type": "string",
+      "format": "date"
+    },
+    "to": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "group"
+  ]
+}

@@ -1,0 +1,570 @@
+openapi: 3.1.0
+x-stoplight:
+  id: nndim032h4cdu
+info:
+  title: SC App API
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /login:
+    post:
+      summary: Login
+      operationId: login
+      responses:
+        '200':
+          $ref: '#/components/responses/LoginResponse'
+        '400':
+          description: |-
+            Bad Request
+
+            無効なfirebaseIdToken
+        '401':
+          description: |-
+            Unauthorized
+
+            運営がデータを登録してないアカウント
+        '403':
+          description: |-
+            Forbidden
+
+            disabledアカウント
+      description: ''
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/LoginRequest'
+      tags:
+        - auth
+  '/user/{userId}':
+    parameters:
+      - $ref: '#/components/parameters/UserId'
+    get:
+      summary: Get User
+      operationId: get-user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Not Found
+      security:
+        - accessToken: []
+      tags:
+        - user
+  /me:
+    put:
+      summary: Update Me
+      operationId: update-me
+      responses:
+        '200':
+          description: OK
+      security:
+        - accessToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      tags:
+        - user
+    parameters: []
+    get:
+      summary: Get Me
+      operationId: get-me
+      responses:
+        '200':
+          description: OK
+      description: '`user.answeredAt`が無い場合、初期登録フォームへ'
+  /users:
+    get:
+      summary: Get Users
+      tags:
+        - user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+      operationId: get-users
+      security:
+        - accessToken: []
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      description: ''
+  /users/search:
+    get:
+      summary: Search Users
+      tags:
+        - user
+      responses: {}
+      operationId: search-users
+      parameters:
+        - $ref: '#/components/parameters/Query'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      security:
+        - accessToken: []
+  /programs:
+    get:
+      summary: Get Programs
+      tags:
+        - generation
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ./archive/schemas/Models/Generation.json
+      operationId: get-programs
+      security:
+        - accessToken: []
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+    parameters: []
+  /houses:
+    get:
+      summary: Get Houses
+      tags:
+        - generation
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Generation'
+      operationId: get-houses
+      security:
+        - accessToken: []
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+    parameters: []
+  /committees:
+    get:
+      summary: Get Committees
+      tags:
+        - group
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+      operationId: get-committees
+      security:
+        - accessToken: []
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+    parameters: []
+  /clubs:
+    get:
+      summary: Get Clubs
+      tags:
+        - group
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+      operationId: get-clubs
+      security:
+        - accessToken: []
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+    parameters: []
+components:
+  schemas:
+    User:
+      title: User
+      x-stoplight:
+        id: u404lkmcq0xwp
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+        role:
+          $ref: '#/components/schemas/Role'
+        disabled:
+          type: boolean
+          readOnly: true
+        answeredAt:
+          type: string
+          format: date-time
+          readOnly: true
+        imageUrl:
+          type: string
+          format: uri
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phoneticFirstName:
+          type: string
+        phoneticLastName:
+          type: string
+        translations:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/UserTranslation'
+        nicknames:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        dateOfBirth:
+          type: string
+          format: date
+        hideAge:
+          type: boolean
+        socialProfiles:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/UserSocialProfile'
+        roomNumber:
+          type: integer
+          minimum: 100
+          maximum: 599
+        postNumber:
+          type: integer
+          minimum: 100
+          maximum: 599
+        programs:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Generation'
+        houses:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Generation'
+        committees:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/UserGroupBelonging'
+        clubs:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/UserGroupBelonging'
+      required:
+        - id
+        - email
+        - role
+    Role:
+      title: Role
+      x-stoplight:
+        id: eo0oadicbwru6
+      type: string
+      enum:
+        - resident
+        - alumni
+        - staff
+    Locale:
+      title: Locale
+      x-stoplight:
+        id: 075wruf9e9y6p
+      type: string
+      enum:
+        - en_US
+    SocialBrand:
+      title: SocialBrand
+      x-stoplight:
+        id: 7hmmwc87uyaxi
+      type: string
+      enum:
+        - twitter
+        - instagram
+        - paypay
+    Generation:
+      title: Generation
+      x-stoplight:
+        id: t87c0gk4ntt12
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/GenerationType'
+        name:
+          type: string
+        fullname:
+          type: string
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+      required:
+        - id
+        - type
+        - name
+    GenerationInner:
+      title: GenerationInner
+      x-stoplight:
+        id: 564affde979e7
+      type: object
+      properties:
+        generationId:
+          type: string
+      required:
+        - generationId
+    GenerationType:
+      title: GenerationType
+      x-stoplight:
+        id: c6qkhitibtef4
+      type: string
+      enum:
+        - program
+        - house
+    Group:
+      title: Group
+      x-stoplight:
+        id: 48sqqxq5kncvj
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/GroupType'
+        name:
+          type: string
+        emoji:
+          type: string
+        slackChannel:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        archivedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - type
+        - name
+    GroupInner:
+      title: GroupInner
+      x-stoplight:
+        id: ef7ee34d50b18
+      type: object
+      properties:
+        groupId:
+          type: string
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+      required:
+        - groupId
+    GroupType:
+      title: GroupType
+      x-stoplight:
+        id: k26nompwlfp22
+      type: string
+      enum:
+        - committee
+        - club
+    UserTranslation:
+      title: UserTranslation
+      x-stoplight:
+        id: l56mfiywec7nh
+      type: object
+      properties:
+        locale:
+          $ref: '#/components/schemas/Locale'
+        firstName:
+          type: string
+        lastName:
+          type: string
+      required:
+        - locale
+    UserSocialProfile:
+      title: UserSocialProfile
+      x-stoplight:
+        id: 4ya5qp86waqy1
+      type: object
+      properties:
+        brand:
+          $ref: '#/components/schemas/SocialBrand'
+        username:
+          type: string
+      required:
+        - brand
+        - username
+    UserGroupBelonging:
+      title: UserGroupBelonging
+      x-stoplight:
+        id: j4x0ojxe1sf8w
+      type: object
+      properties:
+        group:
+          $ref: '#/components/schemas/Group'
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+      required:
+        - group
+  securitySchemes:
+    accessToken:
+      type: http
+      scheme: bearer
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: string
+    Offset:
+      name: offset
+      in: query
+      required: false
+      schema:
+        type: string
+    UserId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Id of an existing user.
+    Query:
+      name: q
+      in: query
+      required: true
+      schema:
+        type: string
+  requestBodies:
+    LoginRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firebaseIdToken:
+                type: string
+            required:
+              - firebaseIdToken
+    UpdateUserRequest:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              imageUrl:
+                type: string
+                format: uri
+              firstName:
+                type: string
+              lastName:
+                type: string
+              phoneticFirstName:
+                type: string
+              phoneticLastName:
+                type: string
+              translations:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/UserTranslation'
+              nicknames:
+                type: array
+                uniqueItems: true
+                items:
+                  type: string
+              dateOfBirth:
+                type: string
+                format: date
+              hideAge:
+                type: boolean
+              socialProfiles:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/UserSocialProfile'
+              roomNumber:
+                type: integer
+                minimum: 100
+                maximum: 599
+              postNumber:
+                type: integer
+                minimum: 100
+                maximum: 599
+              programs:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/GenerationOption'
+              houses:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/GenerationOption'
+              committees:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/GroupOption'
+              clubs:
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/GroupOption'
+  responses:
+    LoginResponse:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              accessToken:
+                type: string
+            required:
+              - accessToken
+      headers: {}
+tags:
+  - name: auth
+  - name: generation
+  - name: group
+  - name: user

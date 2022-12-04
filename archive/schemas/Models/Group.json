@@ -1,0 +1,43 @@
+{
+  "title": "Group",
+  "x-stoplight": {
+    "id": "nu0j3q35b0zt1"
+  },
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true
+    },
+    "type": {
+      "$ref": "./GenerationType.json"
+    },
+    "name": {
+      "type": "string",
+      "readOnly": true
+    },
+    "emoji": {
+      "type": "string",
+      "readOnly": true
+    },
+    "slackChannel": {
+      "type": "string",
+      "readOnly": true
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "archivedAt": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "name"
+  ]
+}

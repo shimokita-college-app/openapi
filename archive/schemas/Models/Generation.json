@@ -1,0 +1,39 @@
+{
+  "title": "Generation",
+  "x-stoplight": {
+    "id": "blf8zn9k4uq2r"
+  },
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "readOnly": true
+    },
+    "type": {
+      "$ref": "./GenerationType.json"
+    },
+    "name": {
+      "type": "string",
+      "readOnly": true
+    },
+    "fullname": {
+      "type": "string",
+      "readOnly": true
+    },
+    "from": {
+      "type": "string",
+      "format": "date",
+      "readOnly": true
+    },
+    "to": {
+      "type": "string",
+      "format": "date",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "name"
+  ]
+}
