@@ -1,4 +1,4 @@
-# Shimokita College API - OpenAPI
+# SC App API - OpenAPI
 
 ## Mock Server
 
