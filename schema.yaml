@@ -3,7 +3,7 @@ x-stoplight:
   id: nndim032h4cdu
 info:
   title: SC App API
-  version: 1.1.2
+  version: 1.1.3
 servers:
   - url: 'http://localhost:3000'
 paths:
@@ -437,65 +437,64 @@ components:
       content:
         application/json:
           schema:
-            allOf:
-              - properties:
-                  imageUrl:
-                    type: string
-                    format: uri
-                  firstName:
-                    type: string
-                  lastName:
-                    type: string
-                  phoneticFirstName:
-                    type: string
-                  phoneticLastName:
-                    type: string
-                  i18n:
-                    type: object
-                    properties:
-                      en_US:
-                        $ref: '#/components/schemas/UserI18n'
-                  nicknames:
-                    type: array
-                    uniqueItems: true
-                    items:
-                      type: string
-                  dateOfBirth:
-                    type: string
-                    format: date
-                  hideAge:
-                    type: boolean
-                  socialProfiles:
-                    type: object
-                    properties:
-                      twitter:
-                        type: string
-                        description: exclude "@"
-                      instagram:
-                        type: string
-                        description: exclude "@"
-                      paypay:
-                        type: string
-                        description: PayPay ID
-                  roomNumber:
-                    type: integer
-                    minimum: 100
-                    maximum: 599
-                  postNumber:
-                    type: integer
-                    minimum: 100
-                    maximum: 599
-                  generations:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/ObjectId'
-                  groups:
-                    type: array
-                    items:
-                      allOf:
-                        - $ref: '#/components/schemas/ObjectId'
-                        - $ref: '#/components/schemas/UserGroupBelonging'
             type: object
+            properties:
+              imageUrl:
+                type: string
+                format: uri
+              firstName:
+                type: string
+              lastName:
+                type: string
+              phoneticFirstName:
+                type: string
+              phoneticLastName:
+                type: string
+              i18n:
+                type: object
+                properties:
+                  en_US:
+                    $ref: '#/components/schemas/UserI18n'
+              nicknames:
+                type: array
+                uniqueItems: true
+                items:
+                  type: string
+              dateOfBirth:
+                type: string
+                format: date
+              hideAge:
+                type: boolean
+              socialProfiles:
+                type: object
+                properties:
+                  twitter:
+                    type: string
+                    description: exclude "@"
+                  instagram:
+                    type: string
+                    description: exclude "@"
+                  paypay:
+                    type: string
+                    description: PayPay ID
+              roomNumber:
+                type: integer
+                minimum: 100
+                maximum: 599
+              postNumber:
+                type: integer
+                minimum: 100
+                maximum: 599
+              generations:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ObjectId'
+              groups:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/ObjectId'
+                    - $ref: '#/components/schemas/UserGroupBelonging'
       description: ''
   responses:
     LoginResponse:
