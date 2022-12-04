@@ -35,7 +35,41 @@ paths:
         $ref: '#/components/requestBodies/LoginRequest'
       tags:
         - auth
-  '/user/{userId}':
+  /me:
+    put:
+      summary: Update Me
+      operationId: update-me
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      security:
+        - accessToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      tags:
+        - user
+    parameters: []
+    get:
+      summary: Get Me
+      operationId: get-me
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      description: '`user.answeredAt`が無い場合、初期登録フォームへ'
+      tags:
+        - user
+      security:
+        - accessToken: []
+  '/users/{userId}':
     parameters:
       - $ref: '#/components/parameters/UserId'
     get:
@@ -54,30 +88,6 @@ paths:
         - accessToken: []
       tags:
         - user
-  /me:
-    put:
-      summary: Update Me
-      operationId: update-me
-      responses:
-        '200':
-          description: OK
-      security:
-        - accessToken: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-      tags:
-        - user
-    parameters: []
-    get:
-      summary: Get Me
-      operationId: get-me
-      responses:
-        '200':
-          description: OK
-      description: '`user.answeredAt`が無い場合、初期登録フォームへ'
   /users:
     get:
       summary: Get Users
@@ -154,6 +164,25 @@ paths:
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Offset'
     parameters: []
+  '/generations/{generationId}':
+    parameters:
+      - $ref: '#/components/parameters/GenerationId'
+    get:
+      summary: Get Generation
+      tags:
+        - generation
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Generation'
+        '404':
+          description: Not Found
+      operationId: get-generation
+      security:
+        - accessToken: []
   /committees:
     get:
       summary: Get Committees
@@ -196,6 +225,25 @@ paths:
         - $ref: '#/components/parameters/Limit'
         - $ref: '#/components/parameters/Offset'
     parameters: []
+  '/groups/{groupId}':
+    parameters:
+      - $ref: '#/components/parameters/GroupId'
+    get:
+      summary: Get Group
+      tags:
+        - group
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '404':
+          description: Not Found
+      operationId: get-group
+      security:
+        - accessToken: []
 components:
   schemas:
     User:
@@ -474,6 +522,20 @@ components:
       required: true
       schema:
         type: string
+    GenerationId:
+      name: generationId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Id of an existing generation.
+    GroupId:
+      name: groupId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Id of an existing group.
   requestBodies:
     LoginRequest:
       content:
