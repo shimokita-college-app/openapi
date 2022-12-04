@@ -2,7 +2,7 @@
 
 ## Documentaion
 
-https://shimokita-college-app.github.io/openapi/
+https://shimokita-college-app.github.io/openapi
 
 ## Mock Server
 
