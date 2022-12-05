@@ -3,7 +3,7 @@ x-stoplight:
   id: nndim032h4cdu
 info:
   title: SC App API
-  version: 1.1.4
+  version: '1.2'
 servers:
   - url: 'http://localhost:3000'
 paths:
@@ -210,14 +210,11 @@ components:
               readOnly: true
             role:
               $ref: '#/components/schemas/Role'
-            disabled:
-              type: boolean
-              readOnly: true
             answeredAt:
               type: string
               format: date-time
               readOnly: true
-            imageUrl:
+            profileImageUrl:
               type: string
               format: uri
             firstName:
@@ -346,14 +343,12 @@ components:
         - committee
         - club
     ObjectId:
-      title: ''
       x-stoplight:
         id: zxngpftedwer2
       type: object
       properties:
         id:
           type: string
-          readOnly: true
       required:
         - id
       readOnly: true
@@ -439,7 +434,7 @@ components:
           schema:
             type: object
             properties:
-              imageUrl:
+              profileImageUrl:
                 type: string
                 format: uri
               firstName:
